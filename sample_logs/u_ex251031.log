@@ -1,0 +1,29 @@
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2025-10-31 00:00:00
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status time-taken
+2025-10-31 08:15:23 192.168.1.50 GET /default.aspx - 80 - 203.0.113.45 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36 - 200 0 0 125
+2025-10-31 08:16:11 192.168.1.50 GET /images/logo.png - 80 - 203.0.113.45 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36 http://example.com/default.aspx 200 0 0 45
+2025-10-31 08:17:33 192.168.1.50 POST /api/login - 80 admin 203.0.113.45 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36 - 200 0 0 234
+2025-10-31 09:22:15 192.168.1.50 GET /admin/dashboard - 80 admin 203.0.113.45 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36 - 200 0 0 178
+2025-10-31 10:45:22 192.168.1.50 GET /wp-admin - 80 - 185.220.101.67 Mozilla/5.0+(compatible;+Googlebot/2.1) - 404 0 0 23
+2025-10-31 10:45:28 192.168.1.50 GET /phpMyAdmin - 80 - 185.220.101.67 Mozilla/5.0+(compatible;+Googlebot/2.1) - 404 0 0 18
+2025-10-31 10:45:35 192.168.1.50 GET /admin - 80 - 185.220.101.67 Mozilla/5.0+(compatible;+Googlebot/2.1) - 404 0 0 20
+2025-10-31 11:30:44 192.168.1.50 POST /api/users - 80 user1 192.168.1.100 Mozilla/5.0+(Windows+NT+10.0)+Edge/95.0 - 200 0 0 456
+2025-10-31 12:15:55 192.168.1.50 GET /../../windows/system32/config/sam - 80 - 45.142.120.10 python-requests/2.28.0 - 400 0 0 12
+2025-10-31 12:16:02 192.168.1.50 GET /../../../etc/passwd - 80 - 45.142.120.10 python-requests/2.28.0 - 400 0 0 8
+2025-10-31 12:16:10 192.168.1.50 POST /login.aspx id=1'+OR+'1'='1 80 - 45.142.120.10 python-requests/2.28.0 - 500 0 0 234
+2025-10-31 13:20:11 192.168.1.50 GET /api/data - 80 - 198.51.100.23 Mozilla/5.0+(X11;+Linux+x86_64)+Chrome/96.0 - 200 0 0 89
+2025-10-31 14:05:33 192.168.1.50 POST /api/upload - 80 user2 192.168.1.105 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7) - 201 0 0 1234
+2025-10-31 14:30:45 192.168.1.50 GET /download.php?file=../../web.config - 80 - 88.214.26.103 curl/7.68.0 - 403 0 0 45
+2025-10-31 15:12:22 192.168.1.50 POST /api/login - 80 - 203.45.67.89 PostmanRuntime/7.29.0 - 401 0 0 67
+2025-10-31 15:12:25 192.168.1.50 POST /api/login - 80 - 203.45.67.89 PostmanRuntime/7.29.0 - 401 0 0 58
+2025-10-31 15:12:28 192.168.1.50 POST /api/login - 80 - 203.45.67.89 PostmanRuntime/7.29.0 - 401 0 0 62
+2025-10-31 15:12:31 192.168.1.50 POST /api/login - 80 - 203.45.67.89 PostmanRuntime/7.29.0 - 401 0 0 59
+2025-10-31 15:12:34 192.168.1.50 POST /api/login - 80 - 203.45.67.89 PostmanRuntime/7.29.0 - 401 0 0 61
+2025-10-31 16:45:11 192.168.1.50 GET /api/reports - 80 admin 192.168.1.100 Mozilla/5.0+(Windows+NT+10.0)+Firefox/94.0 - 200 0 0 345
+2025-10-31 17:22:33 192.168.1.50 GET /images/banner.jpg - 80 - 198.51.100.50 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+15_0)+Safari/604.1 - 200 0 0 123
+2025-10-31 18:10:44 192.168.1.50 POST /api/settings - 80 admin 192.168.1.100 Mozilla/5.0+(Windows+NT+10.0)+Firefox/94.0 - 200 0 0 567
+2025-10-31 19:05:22 192.168.1.50 GET /shell.php - 80 - 104.244.72.115 Go-http-client/1.1 - 404 0 0 15
+2025-10-31 20:15:33 192.168.1.50 GET /config.json - 80 - 104.244.72.115 Go-http-client/1.1 - 200 0 0 234
+2025-10-31 21:30:45 192.168.1.50 GET /api/health - 80 - 192.168.1.200 Kubernetes+Health+Check - 200 0 0 23

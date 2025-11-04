@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Log Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Forensic Log Analyzer</h1>
+            <p class="subtitle">Professional log analysis for cybersecurity investigations</p>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <section id="upload-section" class="card">
+                <h2>Upload Log File</h2>
+                <div id="drop-zone" class="drop-zone">
+                    <div class="drop-zone-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p class="drop-text">Drag and drop log file here</p>
+                        <p class="drop-text-small">or</p>
+                        <button id="browse-btn" class="btn btn-primary">Browse Files</button>
+                        <input type="file" id="file-input" style="display: none;" accept=".log,.txt,.json,.csv,.xml,.gz,.zip,.tar">
+                        <p class="supported-formats">Supported: Apache, Nginx, Syslog, IIS, JSON, CSV, Windows Event Logs, .gz, .zip, .tar</p>
+                    </div>
+                </div>
+
+                <!-- Custom Patterns (Advanced) -->
+                <details class="advanced-options">
+                    <summary>Advanced Options</summary>
+                    <div class="advanced-content">
+                        <label for="custom-patterns">Custom Regex Patterns (JSON format):</label>
+                        <textarea id="custom-patterns" class="custom-patterns-input" placeholder='{"malware_domain": "evil\\.com|malicious\\.net", "crypto_mining": "xmr|monero|mining"}'></textarea>
+                        <p class="text-muted">Define custom regex patterns to detect specific threats in your logs.</p>
+                    </div>
+                </details>
+
+                <div id="upload-status" class="upload-status"></div>
+            </section>
+
+            <!-- Analysis Results Section -->
+            <section id="results-section" class="card" style="display: none;">
+                <div class="results-header">
+                    <h2>Analysis Results</h2>
+                    <div class="action-buttons">
+                        <button id="enrich-btn" class="btn btn-primary">Enrich with Threat Intel</button>
+                        <button id="export-json-btn" class="btn btn-secondary">Export Report</button>
+                        <button id="export-iocs-btn" class="btn btn-secondary">Export IOCs</button>
+                        <button id="new-analysis-btn" class="btn btn-outline">New Analysis</button>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="overview">Overview</button>
+                    <button class="tab-button" data-tab="timeline">Timeline</button>
+                    <button class="tab-button" data-tab="iocs">IOCs</button>
+                    <button class="tab-button" data-tab="intelligence">Intelligence</button>
+                    <button class="tab-button" data-tab="anomalies">Anomalies</button>
+                    <button class="tab-button" data-tab="search">Search</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Overview Tab -->
+                    <div id="overview-tab" class="tab-pane active">
+                        <div class="overview-grid">
+                            <div class="stat-card">
+                                <h3>File Information</h3>
+                                <div id="file-info"></div>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Quick Statistics</h3>
+                                <div id="quick-stats"></div>
+                            </div>
+                            <div class="stat-card full-width">
+                                <h3>Suspicious Activity</h3>
+                                <div id="suspicious-summary"></div>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Threat Severity Distribution</h3>
+                                <canvas id="severity-chart"></canvas>
+                            </div>
+                            <div class="stat-card">
+                                <h3>IOC Categories</h3>
+                                <canvas id="ioc-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Tab -->
+                    <div id="timeline-tab" class="tab-pane">
+                        <div class="timeline-controls">
+                            <input type="text" id="timeline-filter" class="search-input" placeholder="Filter timeline...">
+                            <select id="severity-filter" class="filter-select">
+                                <option value="all">All Severities</option>
+                                <option value="high">High Only</option>
+                                <option value="medium">Medium Only</option>
+                                <option value="low">Low Only</option>
+                            </select>
+                            <input type="date" id="date-from" class="date-input" placeholder="From">
+                            <input type="date" id="date-to" class="date-input" placeholder="To">
+                            <button id="reset-filters" class="btn btn-secondary">Reset Filters</button>
+                        </div>
+                        <div id="timeline-content" class="timeline"></div>
+                    </div>
+
+                    <!-- IOCs Tab -->
+                    <div id="iocs-tab" class="tab-pane">
+                        <div id="iocs-content" class="iocs-grid"></div>
+                    </div>
+
+                    <!-- Intelligence Tab -->
+                    <div id="intelligence-tab" class="tab-pane">
+                        <div id="intelligence-status" class="intelligence-status">
+                            <p class="text-muted">Click "Enrich with Threat Intel" to get GeoIP and threat intelligence data for IPs in this analysis.</p>
+                        </div>
+                        <div id="intelligence-content" style="display: none;">
+                            <div class="overview-grid">
+                                <div class="stat-card">
+                                    <h3>Threat Summary</h3>
+                                    <div id="threat-summary"></div>
+                                </div>
+                                <div class="stat-card">
+                                    <h3>High Risk IPs</h3>
+                                    <div id="high-risk-ips"></div>
+                                </div>
+                                <div class="stat-card full-width">
+                                    <h3>GeoIP Locations</h3>
+                                    <div id="geoip-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anomalies Tab -->
+                    <div id="anomalies-tab" class="tab-pane">
+                        <div id="anomalies-content" class="anomalies-list"></div>
+                    </div>
+
+                    <!-- Search Tab -->
+                    <div id="search-tab" class="tab-pane">
+                        <div class="search-controls">
+                            <input type="text" id="search-input" class="search-input" placeholder="Search all log entries...">
+                            <button id="search-btn" class="btn btn-primary">Search</button>
+                        </div>
+                        <div id="search-results" class="search-results"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Forensic Log Analyzer v1.0 | Built for cybersecurity professionals</p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Analyzing log file...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
