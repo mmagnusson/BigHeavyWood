@@ -37,6 +37,7 @@ return {
 ### 2. Test the Integration (10 min)
 
 ```bash
+cd c:/Users/mmagnusson/GITHUB_STUFF/BigHeavyWood
 
 python -c "
 from parsers.log_parser import LogParser
